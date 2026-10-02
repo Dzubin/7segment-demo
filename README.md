@@ -119,3 +119,7 @@ together.
     cmake --build build-linux
 
 Output: `7segment-demo-Linux` and `libSDL2-2.0.so.0` in the top-level folder.
+
+## License
+
+MIT, see `LICENSE`. The vendored drivers from `picocalc-text-starter` by Blair Leduc keep their own license (see the `LICENSE` file that comes with them).
