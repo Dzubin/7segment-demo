@@ -57,3 +57,19 @@
 #define STYLE_HEADER_ROW  22
 #define STYLE_ROW_Y       (STYLE_HEADER_ROW * GLYPH_HEIGHT + 12)  // pixels
 #define FOOTER_ROW        31
+#define FOOTER_COL         0
+
+// --- Leaving for the PicoCalc UF2 Loader (pelrun/uf2loader) ------------
+// The loader has no call for an app to use, but its own menu hands commands to
+// its start-up code through the chip's watchdog scratch registers, which
+// survive a watchdog reboot: scratch 0 holds a magic number, 1 the boot mode,
+// 2 an argument. Asking for boot mode "SD" and then rebooting makes the loader
+// show its menu again. With no loader installed the program just restarts.
+#define LOADER_COMMAND_MAGIC     0xE98CC638u  // PICOCALC_BL_MAGIC in the loader's proginfo.h
+#define LOADER_BOOT_MODE_SD      1            // BOOT_SD: load the menu from the SD card
+#define LOADER_SCRATCH_MAGIC     0
+#define LOADER_SCRATCH_MODE      1
+#define LOADER_SCRATCH_ARGUMENT  2
+#define LOADER_EXIT_MSG_MS       300          // how long "BACK TO THE LOADER..." shows
+#define LOADER_REBOOT_DELAY_MS   10           // the reboot happens this long after it is asked for
+#define LOADER_MSG_COL           2            // the message goes on the footer row

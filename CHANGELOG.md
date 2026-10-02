@@ -7,6 +7,11 @@ the version here matches the `VERSION` define in `constants.h`.
 ## [Unreleased]
 
 ### Added
+- Leaving: `Q` (any screen) and `ESC` (from a grid) now leave for the PicoCalc
+  UF2 Loader menu (it asks the loader for its menu through the watchdog scratch
+  registers; with no loader installed the program just restarts, and on a PC it
+  closes). The footer line was reworded to fit the hint; `~` still goes to
+  BOOTSEL.
 - Desktop build: the build logic that was repeated in `desktop/CMakeLists.txt` now
   lives in `desktop/shim_desktop.cmake` (that file now only names the program and
   its sources), and the shim files were refreshed from a shared copy. The numeric

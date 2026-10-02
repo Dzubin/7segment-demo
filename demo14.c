@@ -199,7 +199,7 @@ void demo14_draw_grid(int size_index, int style_index)
     highlight_style_item(style_index);
 
     lcd_set_foreground(COLOR_TEXT);
-    lcd_putstr(2, FOOTER_ROW, "U/D=sz L/R=stl ENTER F1=7SEG ~=BOOT");
+    lcd_putstr(FOOTER_COL, FOOTER_ROW, "ARROWS ENTER F1=7SEG ESC/Q=EXIT ~=BOOT");
 }
 
 void demo14_draw_detail(int size_index, int style_index)

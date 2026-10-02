@@ -71,6 +71,7 @@ target_include_directories(7segment-demo PRIVATE
 target_link_libraries(7segment-demo
         pico_stdlib
         hardware_spi
+        hardware_watchdog   # watchdog_reboot(): leaving for the UF2 Loader
         hardware_gpio
         hardware_i2c
         )
@@ -94,6 +95,6 @@ pico_add_extra_outputs(7segment-demo)
 add_custom_command(TARGET 7segment-demo POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy
             $<TARGET_FILE_DIR:7segment-demo>/$<TARGET_FILE_BASE_NAME:7segment-demo>.uf2
-            /
+            ${CMAKE_CURRENT_LIST_DIR}/
 )
 

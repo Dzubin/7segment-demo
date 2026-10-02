@@ -25,8 +25,9 @@
 //    LEFT / RIGHT ... move the STYLE selection (wraps)
 //    ENTER ......... tile the combined size+style across the screen
 //                     ("detail view")
-//    ESC ........... from detail view, back to the grid (no effect on the
-//                     grid itself)
+//    ESC ........... from detail view, back to the grid; from a grid, leave
+//                     for the PicoCalc UF2 Loader menu
+//    Q ............. leave for the PicoCalc UF2 Loader menu, from any screen
 //    F1 ............ switch between the 7-segment and 14-segment screens
 //                     (from either the grid or its detail view)
 //    ~ ............. (SHIFT + backtick) reboot into BOOTSEL, from any
@@ -52,10 +53,12 @@
 
 #include "pico/stdlib.h"
 #include "pico/bootrom.h"
+#include "hardware/watchdog.h"
 
 #include "drivers/lcd.h"
 #include "drivers/keyboard.h"
 
+#include "constants.h"
 #include "demo.h"
 #include "demo14.h"
 
@@ -68,6 +71,8 @@ typedef enum
     SCREEN_7SEG,
     SCREEN_14SEG
 } screen_t;
+
+static void exit_to_loader(void);
 
 int main(void)
 {
@@ -96,6 +101,10 @@ int main(void)
             if (key == '~')
             {
                 rom_reset_usb_boot(0, 0);
+            }
+            else if (key == 'q' || key == 'Q' || (key == KEY_ESC && !detail))
+            {
+                exit_to_loader();       // ESC only from a grid: in the detail view it means "back"
             }
             else if (key == KEY_F1)
             {
@@ -203,5 +212,28 @@ int main(void)
         }
 
         tight_loop_contents();
+    }
+}
+
+// Leaves the program for the PicoCalc UF2 Loader's menu: shows a short message
+// on the footer row, asks the loader for its menu (see LOADER_COMMAND_MAGIC in
+// constants.h) and reboots with the watchdog. If the program was flashed
+// straight to the chip with no loader, nothing reads the request and it simply
+// restarts. On the desktop build the watchdog stand-in just closes the program.
+static void exit_to_loader(void)
+{
+    lcd_solid_rectangle(COLOR_BG, 0, FOOTER_ROW * GLYPH_HEIGHT, WIDTH, GLYPH_HEIGHT);
+    lcd_set_foreground(COLOR_TEXT);
+    lcd_putstr(LOADER_MSG_COL, FOOTER_ROW, "BACK TO THE LOADER...");
+    sleep_ms(LOADER_EXIT_MSG_MS);
+
+    watchdog_hw->scratch[LOADER_SCRATCH_MODE] = LOADER_BOOT_MODE_SD;
+    watchdog_hw->scratch[LOADER_SCRATCH_ARGUMENT] = 0;
+    watchdog_hw->scratch[LOADER_SCRATCH_MAGIC] = LOADER_COMMAND_MAGIC;
+    watchdog_reboot(0, 0, LOADER_REBOOT_DELAY_MS);
+
+    while (true)
+    {
+        tight_loop_contents();      // the reboot comes in a few milliseconds
     }
 }

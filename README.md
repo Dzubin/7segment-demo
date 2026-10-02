@@ -41,7 +41,8 @@ box in the grid:
 | UP / DOWN     | move the SIZE selection (wraps)                                |
 | LEFT / RIGHT  | move the STYLE selection (wraps)                                |
 | ENTER         | tile the *combination* - the selected style, at the selected size tier's own w/h/thickness - edge-to-edge across the whole screen |
-| ESC           | (from that detail view) back to the grid                       |
+| ESC           | (from that detail view) back to the grid; from a grid, leave for the PicoCalc UF2 Loader menu |
+| Q             | leave for the PicoCalc UF2 Loader menu, from any screen         |
 | F1            | switch between the 7-segment and 14-segment screens             |
 | ~ (SHIFT + `) | reboot into BOOTSEL (USB drive) mode, from any screen           |
 
