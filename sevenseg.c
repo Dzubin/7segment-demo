@@ -10,8 +10,7 @@
 #include "drivers/lcd.h"
 #include "sevenseg.h"
 
-// Same table/bit order as the seven-segment digit clock in bouncing-block's
-// game.c: bit0=a(top) .. bit6=g(middle).
+// Standard seven-segment bit order: bit0=a(top) .. bit6=g(middle).
 static const uint8_t digit_masks[10] = {
     0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F
 };
