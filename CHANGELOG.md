@@ -6,6 +6,11 @@ the version here matches the `VERSION` define in `constants.h`.
 
 ## [Unreleased]
 
+- Updated the vendored drivers to Blair Leduc's `picocalc-text-starter` of 2026-10-18 (commit
+  `85a002e`) and moved to Pico SDK 2.3.1. Two local changes remain: `lcd_putstr()` cuts a string off
+  at the right edge of the display, and `keyboard.c` treats a held key as a press, so that the arrow
+  keys auto-repeat.
+
 ### Added
 - Leaving: `Q` (any screen) and `ESC` (from a grid) now leave for the PicoCalc
   UF2 Loader menu (it asks the loader for its menu through the watchdog scratch
